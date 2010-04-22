@@ -16,10 +16,16 @@ module OAuth2
       def initialize(options = {})#:nodoc:
       end
 
+      def app_for(client)
+      end
+
       def temporary_code_for(client, options = {})
       end
 
       def access_token_for(client, options = {})
+      end
+
+      def access_token_options(token)
       end
     end
   end
