@@ -1,5 +1,10 @@
 require 'faraday'
 
+require 'oauth2'
+require 'oauth2/strategy/base'
+require 'oauth2/strategy/web_server'
+require 'oauth2/access_token'
+
 module OAuth2
   class Client
     class << self
