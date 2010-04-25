@@ -5,8 +5,8 @@ describe OAuth2::Strategy::WebServer do
     cli = OAuth2::Client.new('abc','def', :site => 'http://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.get('/oauth/access_token?code=sushi&client_id=abc&client_secret=def&type=web_server') do |env| 
-          [200, {}, 'a=1&access_token=salmon']
+        stub.post('/oauth/access_token?code=sushi&client_id=abc&client_secret=def&type=web_server') do |env| 
+          [200, {}, 'a=1&access_token=salmon&refresh_token=trout']
         end
       end
     end
@@ -29,9 +29,9 @@ describe OAuth2::Strategy::WebServer do
     end
   end
 
-  describe "#access_token" do
+  describe "#get_access_token" do
     before do
-      @access = subject.access_token('sushi')
+      @access = subject.get_access_token('sushi')
     end
 
     it 'returns AccessToken with same Client' do
@@ -40,6 +40,10 @@ describe OAuth2::Strategy::WebServer do
 
     it 'returns AccessToken with #token' do
       @access.token.should == 'salmon'
+    end
+
+    it 'returns AccessToken with #refresh_token' do
+      @access.refresh_token.should == 'trout'
     end
   end
 end
